@@ -25,7 +25,6 @@ export default function getWalls(timestemps, x, y) {
     if (neighbors[1][2] === "1" || neighbors[2][1] === "1") {
         neighbors[2][2] = "1";
     }
-    console.log(neighbors);
     const walls = neighbors[0][0] +
         neighbors[0][1] +
         neighbors[0][2] +

@@ -52,7 +52,6 @@ export default class TetwistFieldCanvas {
           case "A": case "B": case "G": case "I": case "J": case "O": case "S": case "T": case "Z": case "L":
             const walls = getWalls(tileTimestemp, x, y);
             const spritePos = getTilePosition(tileName, walls);
-            console.log(x, y, walls, spritePos);
             twtwistTileset.drawImage(ctx, spritePos[0], spritePos[1], x * blockSize, y * blockSize, blockSize, blockSize);
             break;
         }

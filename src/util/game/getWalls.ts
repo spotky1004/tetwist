@@ -27,7 +27,6 @@ export default function getWalls(timestemps: number[][], x: number, y: number) {
     neighbors[2][2] = "1"
   }
 
-  console.log(neighbors);
   const walls =
     neighbors[0][0] +
     neighbors[0][1] +
