@@ -1,0 +1,61 @@
+@import url("./content.css");
+
+@font-face {
+  font-family: "ShareTechMono";
+  src: url("../assets/fonts/ShareTechMono/ShareTechMono-Regular.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  color: #fff;
+  font-family: "ShareTechMono", monospace;
+  font-size: 1.6vmin;
+
+  user-select: none;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #222;
+}
+
+#background {
+  --size: 25vmin;
+  --move-x: 0;
+  --move-y: 0;
+
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  
+  z-index: -1;
+
+  pointer-events: none;
+  transition:
+    background-image 0.5s linear,
+    background-size 0.5s ease-out;
+}
+@keyframes backgroundRainbow {
+  from {
+    filter: hue-rotate(0deg);
+  }
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+#top, #footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 8vh;
+  
+  font-size: 2em;
+
+  background-color: #15151588;
+}

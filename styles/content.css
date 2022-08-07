@@ -1,0 +1,10 @@
+#content {
+  height: 84vh;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#content > #game {
+  grid-column: 2 / 4;
+}
