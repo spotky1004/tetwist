@@ -1,8 +1,8 @@
 export default class Sprite {
     constructor(options) {
         this._imageUrl = "";
-        this.itemWidth = options.itemWidth;
-        this.itemHeight = options.itemHeight;
+        this.rows = options.rows;
+        this.cols = options.cols;
         this.image = null;
         this.imageUrl = options.imageUrl;
     }
@@ -11,19 +11,25 @@ export default class Sprite {
     }
     set imageUrl(url) {
         const image = new Image();
-        image.src = url;
-        this._imageUrl = url;
         image.addEventListener("load", () => {
             // If src isn't matched, return to avoid interrupt
             if (image.src !== this._imageUrl)
                 return;
             this.image = image;
         });
+        image.src = url;
+        this._imageUrl = url;
+    }
+    get width() {
+        return this.image?.width ?? 0;
+    }
+    get height() {
+        return this.image?.height ?? 0;
     }
     drawImage(ctx, x, y, dx, dy, dWidth, dHeight) {
-        const { image, itemWidth, itemHeight } = this;
+        const { image, rows, cols } = this;
         if (!image)
             return;
-        ctx.drawImage(image, x * itemWidth, y * itemHeight, itemWidth, itemHeight, dx, dy, dWidth, dHeight);
+        ctx.drawImage(image, image.width * (x / rows), image.height * (y / cols), image.width / rows, image.height / cols, dx, dy, dWidth, dHeight);
     }
 }
