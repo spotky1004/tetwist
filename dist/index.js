@@ -13,3 +13,11 @@ background.startMove({
     xSpeed: 1,
     ySpeed: 1
 });
+import useRelativePath from "./util/path/useRelativePath.js";
+import Sprite from "./class/util/Sprite.js";
+const sprite = new Sprite({
+    imageUrl: useRelativePath("../assets/images/tetris_tileset.png"),
+    itemWidth: 64,
+    itemHeight: 64
+});
+console.log(sprite);
