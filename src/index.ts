@@ -25,27 +25,27 @@ const field = new TetwistField({
 });
 for (let x = 0; x < 10; x++) {
   for (let y = 0; y < 20; y++) {
-    const t = Math.floor(Math.random()*3);
-    let tileId = -1;
-    if (t === 0) {
-      tileId = tilesEnum.L;
-    } else if (t === 1) {
-      tileId = tilesEnum.O;
-    } else if (t === 2) {
-      tileId = tilesEnum.T;
-    }
-    field.setTile(x, y, tileId, t);
+    if (Math.random() > 0.5) continue;
+    const timestamp = Math.floor(Math.random()*2);
+    const tileId = tilesEnum.normalBlock;
+    const isGrey = Math.random() < 0.1;
+    field.setTile(x, y, {
+      tileId,
+      timestamp,
+      hslAdjust: {
+        hue: Math.random()*360,
+        lightness: isGrey ? 0 : 160,
+        saturation: isGrey ? -50 : 0
+      }
+    });
   }
 }
 
-function tick(t: number) {
-  if (t > 500) return;
+function tick() {
   render();
-  // requestAnimationFrame(tick);
+  requestAnimationFrame(tick);
 }
 function render() {
   field.render();
 }
-setTimeout(() => {
-  tick(0);
-}, 500);
+tick();

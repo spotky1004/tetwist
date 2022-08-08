@@ -6,34 +6,10 @@ const connectedWalls = new Map([
     ["11101011", [0, 4]], ["11111010", [1, 4]], ["10101110", [2, 4]], ["10101011", [3, 4]], ["00000010", [4, 4]], ["00001010", [5, 4]], ["00101110", [6, 4]], ["10111000", [7, 4]],
     ["10101111", [0, 5]], ["10111110", [1, 5]], ["11101010", [2, 5]], ["10111010", [3, 5]], ["10100000", [4, 5]], ["10001010", [5, 5]], ["10100011", [6, 5]],
 ]);
-const piecePositions = {
-    S: [0, 0],
-    L: [8, 0],
-    O: [16, 0],
-    Z: [24, 0],
-    G: [32, 0],
-    I: [0, 6],
-    J: [8, 6],
-    T: [16, 6],
-    A: [24, 6],
-    B: [32, 6]
-};
-// Freeze piecePositions
-Object.freeze(piecePositions);
-(() => {
-    let pieceName;
-    for (pieceName in piecePositions) {
-        Object.freeze(piecePositions[pieceName]);
-    }
-})();
-export function getTilePosition(pieceName, walls) {
-    const piecePosition = piecePositions[pieceName];
+export function getTilePosition(walls) {
     const wallIdx = connectedWalls.get(walls);
-    // If invaild wall, return 1111 Black tile
+    // If invaild wall, return square tile
     if (!wallIdx)
-        return getTilePosition("B", "11111111");
-    return [
-        piecePosition[0] + wallIdx[0],
-        piecePosition[1] + wallIdx[1]
-    ];
+        return getTilePosition("11111111");
+    return [...wallIdx];
 }

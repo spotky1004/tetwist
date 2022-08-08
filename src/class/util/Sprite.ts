@@ -1,4 +1,9 @@
-interface SpriteOptions {
+export interface HslAdjustOptions {
+  hue: number;
+  saturation: number;
+  lightness: number;
+}
+export interface SpriteOptions {
   imageUrl: string;
   rows: number;
   cols: number;
@@ -42,7 +47,7 @@ export default class Sprite {
     return this.image?.height ?? 0;
   }
 
-  drawImage(ctx: CanvasRenderingContext2D, x: number, y: number, dx: number, dy: number, dWidth: number, dHeight: number) {
+  drawImage(ctx: CanvasRenderingContext2D, x: number, y: number, dx: number, dy: number, dWidth: number, dHeight: number, hslAdjustOptions?: HslAdjustOptions) {
     const { image, rows, cols } = this;
     if (!image) return;
 
@@ -51,5 +56,38 @@ export default class Sprite {
       image.width*(x/rows), image.height*(y/cols), image.width/rows, image.height/cols,
       dx, dy, dWidth, dHeight
     );
+
+    // https://stackoverflow.com/a/45201094/13817471
+    if (hslAdjustOptions) {
+      let { hue, saturation, lightness } = hslAdjustOptions;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(dx, dy, dWidth, dHeight);
+      ctx.clip();
+      
+      if (lightness) {
+        ctx.globalCompositeOperation = lightness < 100 ? "color-burn" : "color-dodge";
+        lightness = lightness >= 100 ? lightness - 100 : 100 - (100 - lightness);
+        ctx.fillStyle = "hsl(0, 50%, " + lightness + "%)";
+        ctx.fillRect(dx, dy, dWidth, dHeight);
+      }
+      if (saturation) {
+        ctx.globalCompositeOperation = "saturation";
+        ctx.fillStyle = "hsl(0," + saturation + "%, 50%)";
+        ctx.fillRect(dx, dy, dWidth, dHeight);
+      }
+      if (hue) {
+        ctx.globalCompositeOperation = "hue";
+        ctx.fillStyle = "hsl(" + hue + ",1%, 50%)";
+        ctx.fillRect(dx, dy, dWidth, dHeight);
+      }
+      ctx.globalCompositeOperation = "destination-in";
+      ctx.drawImage(
+        image,
+        image.width*(x/rows), image.height*(y/cols), image.width/rows, image.height/cols,
+        dx, dy, dWidth, dHeight
+      );
+      ctx.restore();
+    }
   }
 }

@@ -1,14 +1,5 @@
 const tilesEnum = {
-    "S": 100,
-    "L": 101,
-    "O": 102,
-    "Z": 103,
-    "G": 104,
-    "I": 105,
-    "J": 106,
-    "T": 107,
-    "A": 108,
-    "B": 109,
+    "normalBlock": 100,
 };
 Object.freeze(tilesEnum);
 const tileNameMap = new Map(Object.entries(tilesEnum).map(([name, id]) => [id, name]));

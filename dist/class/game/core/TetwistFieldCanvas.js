@@ -1,12 +1,12 @@
 import { getTileNameById } from "../../../data/tilesEnum.js";
-import { getTilePosition } from "../../../data/tetwistTileset.js";
+import { getTilePosition } from "../../../data/blockTileset.js";
 import imagePaths from "../../../data/imagePaths.js";
 import Sprite from "../../util/Sprite.js";
 import getWalls from "../../../util/game/getWalls.js";
 const twtwistTileset = new Sprite({
-    imageUrl: imagePaths.tetwistTileset,
-    rows: 40,
-    cols: 12
+    imageUrl: imagePaths.blockTileset,
+    rows: 8,
+    cols: 6
 });
 export default class TetwistFieldCanvas {
     constructor(field, canvasWrapper, canvas) {
@@ -27,32 +27,41 @@ export default class TetwistFieldCanvas {
         const blockSize = Math.floor(Math.min(maxWidth / fieldWidth, maxHeight / fieldHeight));
         this.canvas.width = fieldWidth * blockSize;
         this.canvas.height = fieldHeight * blockSize;
+        const { width, height } = this.canvas;
         const ctx = this.ctx;
-        ctx.fillStyle = "#222";
-        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        const [tileIds, tileTimestemp] = field.fieldData;
+        ctx.fillStyle = "#000";
+        // ctx.fillRect(0, 0, width, height);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#ffffff";
+        // Draw grid
+        for (let i = 1; i < fieldWidth; i++) {
+            ctx.beginPath();
+            ctx.moveTo(i * width / fieldWidth, 0);
+            ctx.lineTo(i * width / fieldWidth, height);
+            ctx.stroke();
+        }
+        for (let i = 1; i < fieldHeight; i++) {
+            ctx.beginPath();
+            ctx.moveTo(0, i * height / fieldHeight);
+            ctx.lineTo(width, i * height / fieldHeight);
+            ctx.stroke();
+        }
+        // Draw cells
+        const fieldData = field.fieldData;
         for (let y = 0; y < fieldHeight; y++) {
-            const tileIdRow = tileIds[y];
+            const fieldRow = fieldData[y];
             for (let x = 0; x < fieldWidth; x++) {
-                const tileId = tileIdRow[x];
-                const tileName = getTileNameById(tileId);
+                const cell = fieldRow[x];
+                const tileName = getTileNameById(cell.tileId);
                 if (!tileName)
                     continue;
+                const xPos = x * blockSize;
+                const yPos = y * blockSize;
                 switch (tileName) {
-                    // What's this...
-                    case "A":
-                    case "B":
-                    case "G":
-                    case "I":
-                    case "J":
-                    case "O":
-                    case "S":
-                    case "T":
-                    case "Z":
-                    case "L":
-                        const walls = getWalls(tileTimestemp, x, y);
-                        const spritePos = getTilePosition(tileName, walls);
-                        twtwistTileset.drawImage(ctx, spritePos[0], spritePos[1], x * blockSize, y * blockSize, blockSize, blockSize);
+                    case "normalBlock":
+                        const walls = getWalls(fieldData, x, y);
+                        const spritePos = getTilePosition(walls);
+                        twtwistTileset.drawImage(ctx, spritePos[0], spritePos[1], xPos, yPos, blockSize, blockSize, cell.hslAdjust);
                         break;
                 }
             }

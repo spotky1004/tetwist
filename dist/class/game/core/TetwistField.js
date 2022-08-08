@@ -1,31 +1,29 @@
-import create2DArray from "../../../util/create2DArray.js";
+import TetwistCell from "./TetwistCell.js";
 import TetwistFieldCanvas from "./TetwistFieldCanvas.js";
+import createEmptyField from "../../../util/game/createEmptyField.js";
 export default class TetwistField {
     constructor(options) {
-        const { width, height, startingField } = options;
+        const { width, height, startingFieldData: startingField } = options;
         this.width = width;
         this.height = height;
-        this.fieldData = [create2DArray(width, height, -1), create2DArray(width, height, -1)];
-        this.startingField = startingField ?? [create2DArray(width, height, -1), create2DArray(width, height, -1)];
+        this.fieldData = createEmptyField(width, height);
+        this.startingField = startingField ?? createEmptyField(width, height);
         this.canvas = new TetwistFieldCanvas(this, options.canvasWrapper, options.canvas);
     }
-    setTile(x, y, tileId, timestemp) {
-        const [tileIds, tileTimestemp] = this.fieldData;
-        tileIds[y][x] = tileId;
-        tileTimestemp[y][x] = timestemp;
+    setTile(x, y, cellOptions) {
+        if (0 > x || x >= this.width ||
+            0 > y || y >= this.height)
+            return;
+        this.fieldData[y][x] = new TetwistCell(cellOptions);
     }
     reset() {
-        const field = this.fieldData;
-        const startingField = this.startingField;
-        for (const typeIdx of [0, 1]) {
-            const fieldData = field[typeIdx];
-            const startingFieldData = startingField[typeIdx];
-            for (let y = 0; y < fieldData.length; y++) {
-                const row = fieldData[y];
-                const startingRow = startingFieldData[y];
-                for (let x = 0; x < row.length; x++) {
-                    row[x] = startingRow[x];
-                }
+        const fieldData = this.fieldData;
+        const startingFieldData = this.startingField;
+        for (let y = 0; y < fieldData.length; y++) {
+            const row = fieldData[y];
+            const startingRow = startingFieldData[y];
+            for (let x = 0; x < row.length; x++) {
+                row[x] = startingRow[x].clone();
             }
         }
     }
