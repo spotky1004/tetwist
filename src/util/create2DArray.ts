@@ -1,9 +1,11 @@
-export default function create2DArray(rows: number, cols: number, fill?: any) {
+export default function create2DArray(rows: number, cols: number, toFill?: any) {
+  const isFillCallback = typeof toFill === "function";
+
   const array = new Array(cols)
     .fill(undefined)
     .map(_ =>
       new Array(rows)
-        .fill(typeof fill !== "undefined" ? fill : undefined)
+        .fill(!isFillCallback ? toFill : toFill())
     );
   
   return array;
