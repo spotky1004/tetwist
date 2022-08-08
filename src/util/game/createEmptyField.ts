@@ -5,7 +5,7 @@ export type Field = TetwistCell[][];
 
 const defaultCellOptions: TetwistCellOptions = {
   tileId: 0,
-  timestamp: -1
+  timestemp: -1
 }
 
 export default function createEmptyField(width: number, height: number, fillWith?: TetwistCellOptions) {

@@ -1,13 +1,13 @@
 export default class TetwistCell {
     constructor(options) {
         this.tileId = options.tileId;
-        this.timestemp = options.timestamp;
+        this.timestemp = options.timestemp;
         this.hslAdjust = options.hslAdjust;
     }
     clone() {
         return new TetwistCell({
             tileId: this.tileId,
-            timestamp: this.timestemp,
+            timestemp: this.timestemp,
             hslAdjust: this.hslAdjust
         });
     }

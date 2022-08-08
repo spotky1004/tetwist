@@ -10,11 +10,20 @@ export default class TetwistField {
         this.startingField = startingField ?? createEmptyField(width, height);
         this.canvas = new TetwistFieldCanvas(this, options.canvasWrapper, options.canvas);
     }
-    setTile(x, y, cellOptions) {
+    setCell(x, y, cellOptions) {
         if (0 > x || x >= this.width ||
             0 > y || y >= this.height)
             return;
         this.fieldData[y][x] = new TetwistCell(cellOptions);
+    }
+    editCell(x, y, cellOptions) {
+        if (0 > x || x >= this.width ||
+            0 > y || y >= this.height)
+            return;
+        const cell = this.fieldData[y][x];
+        cell.tileId = cellOptions.tileId ?? cell.tileId;
+        cell.timestemp = cellOptions.timestemp ?? cell.timestemp;
+        cell.hslAdjust = cellOptions.hslAdjust ?? cell.hslAdjust;
     }
     reset() {
         const fieldData = this.fieldData;
@@ -26,6 +35,13 @@ export default class TetwistField {
                 row[x] = startingRow[x].clone();
             }
         }
+    }
+    cloneField() {
+        const cloned = [];
+        for (let y = 0; y < this.height; y++) {
+            cloned.push(this.fieldData[y].map(cell => cell.clone()));
+        }
+        return cloned;
     }
     render() {
         this.canvas.render();

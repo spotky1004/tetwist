@@ -27,10 +27,10 @@ for (let x = 0; x < 10; x++) {
             continue;
         const timestamp = Math.floor(Math.random() * 2);
         const tileId = tilesEnum.normalBlock;
-        const isGrey = Math.random() < 0.1;
-        field.setTile(x, y, {
+        const isGrey = 0;
+        field.setCell(x, y, {
             tileId,
-            timestamp,
+            timestemp: timestamp,
             hslAdjust: {
                 hue: Math.random() * 360,
                 lightness: isGrey ? 0 : 160,

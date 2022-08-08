@@ -41,7 +41,7 @@ export default class TetwistFieldCanvas {
     const ctx = this.ctx;
     ctx.fillStyle = "#000";
     // ctx.fillRect(0, 0, width, height);
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 0.5;
     ctx.strokeStyle = "#ffffff";
     // Draw grid
     for (let i = 1; i < fieldWidth; i++) {
@@ -70,7 +70,7 @@ export default class TetwistFieldCanvas {
           case "normalBlock":
             const walls = getWalls(fieldData, x, y);
             const spritePos = getTilePosition(walls);
-            twtwistTileset.drawImage(ctx, spritePos[0], spritePos[1], xPos, yPos, blockSize, blockSize, cell.hslAdjust);
+            twtwistTileset.drawImage(ctx, spritePos[0], spritePos[1], xPos+1, yPos+1, blockSize-1, blockSize-1, cell.hslAdjust);
             break;
         }
       }
