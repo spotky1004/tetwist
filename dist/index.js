@@ -2,6 +2,16 @@ import RepeatingBackground from "./class/util/RepeatingBackground.js";
 import imagePaths from "./data/imagePaths.js";
 import TetwistField from "./class/game/core/TetwistField.js";
 import tilesEnum from "./data/tilesEnum.js";
+import KeyboardEventsManager from "./class/util/KeyboardEventsManager.js";
+// keyboardEventsManager test
+const keyboardEventsManager = new KeyboardEventsManager();
+keyboardEventsManager.attatchEvent("down", "k", (e) => {
+    console.log(e);
+    keyboardEventsManager.stop();
+    setTimeout(() => {
+        keyboardEventsManager.start();
+    }, 500);
+});
 const background = new RepeatingBackground({
     element: document.getElementById("background"),
     size: {
@@ -15,6 +25,7 @@ background.startMove({
     xSpeed: 1,
     ySpeed: 1
 });
+// field test
 const field = new TetwistField({
     width: 10,
     height: 20,
