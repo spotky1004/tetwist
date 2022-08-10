@@ -1,4 +1,4 @@
-import useRelativePath from "../util/path/useRelativePath.js";
+import useRelativePath from "../util/etc/path/useRelativePath.js";
 
 const imagePaths = {
   bgNormal: useRelativePath("../../assets/images/bg_normal.png"),

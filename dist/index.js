@@ -1,16 +1,20 @@
 import RepeatingBackground from "./class/util/RepeatingBackground.js";
 import imagePaths from "./data/imagePaths.js";
 import TetwistField from "./class/game/core/TetwistField.js";
+import Piece from "./class/game/core/Piece.js";
 import tilesEnum from "./data/tilesEnum.js";
-import KeyboardEventsManager from "./class/util/KeyboardEventsManager.js";
-// keyboardEventsManager test
-const keyboardEventsManager = new KeyboardEventsManager();
-keyboardEventsManager.attatchEvent("down", "k", (e) => {
-    console.log(e);
-    keyboardEventsManager.stop();
-    setTimeout(() => {
-        keyboardEventsManager.start();
-    }, 500);
+// piece parsing test
+new Piece({
+    shape: "..o\nooo",
+    centerMode: "normal"
+});
+new Piece({
+    shape: ".oo\noo.",
+    centerMode: "normal"
+});
+new Piece({
+    shape: "oooo",
+    centerMode: "normal"
 });
 const background = new RepeatingBackground({
     element: document.getElementById("background"),
