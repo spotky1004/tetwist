@@ -110,11 +110,34 @@ function replace(arr, replacer) {
     }
     return result;
 }
+function rotate(arr, rotateCount) {
+    if (!Number.isInteger(rotateCount))
+        throw new Error("Rotate count must be an integer");
+    const [width, height] = measure(arr);
+    if (width !== height)
+        throw new Error("Width and height of the array must be the same to rotate");
+    const theta = Math.PI / 2 * (rotateCount % 4);
+    const sint = Math.round(Math.sin(theta));
+    const cost = Math.round(Math.cos(theta));
+    const result = [];
+    for (let y = 0; y < height; y++) {
+        const row = [];
+        for (let x = 0; x < width; x++) {
+            const shiftedX = x - (width - 1) / 2;
+            const shiftedY = y - (height - 1) / 2;
+            const xIdx = shiftedX * cost - shiftedY * sint + (width - 1) / 2;
+            const yIdx = shiftedX * sint + shiftedY * cost + (height - 1) / 2;
+            row.push(arr[yIdx][xIdx]);
+        }
+    }
+    return result;
+}
 export default {
     create,
     fill,
     is,
     measure,
     trim,
-    replace
+    replace,
+    rotate
 };

@@ -23,6 +23,5 @@ export default class Piece {
                 throw new Error("Invaild char in piece shape");
             return tileId;
         });
-        // console.log(options.shape, parsedPiece, centeredPiece, this.pieceSpace);
     }
 }
