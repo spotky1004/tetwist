@@ -5,18 +5,17 @@ import Piece from "./class/game/core/Piece.js";
 import tilesEnum from "./data/tilesEnum.js";
 
 // piece parsing test
-new Piece({
-  shape: "..o\nooo",
-  centerMode: "normal"
-});
-new Piece({
-  shape: ".oo\noo.",
-  centerMode: "normal"
-});
-new Piece({
-  shape: "oooo",
-  centerMode: "normal"
-});
+const shapes = ["..o\nooo", ".oo\noo.", "ooooo\noo.oo\nooooo"];
+for (const shape of shapes) {
+  console.time("t");
+  for (let i = 0; i < 100_000; i++) {
+    new Piece({
+      shape,
+      centerMode: "normal"
+    });
+  }
+  console.timeEnd("t");
+}
 
 const background = new RepeatingBackground({
   element: document.getElementById("background") as HTMLDivElement,
