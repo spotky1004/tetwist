@@ -1,4 +1,4 @@
-import TetwistCell, { TetwistCellOptions } from "../../class/game/core/TetwistCell.js";
+import TetwistCell, { TetwistCellOptions } from "../../class/game/TetwistCell.js";
 import array2D from "../etc/array2D.js";
 
 export type Field = TetwistCell[][];

@@ -1,8 +1,8 @@
-import { getTileNameById } from "../../../data/tilesEnum.js";
-import { getTilePosition } from "../../../data/blockTileset.js";
-import imagePaths from "../../../data/imagePaths.js";
-import Sprite from "../../util/Sprite.js";
-import getWalls from "../../../util/game/getWalls.js";
+import { getTileNameById } from "../../data/tilesEnum.js";
+import { getTilePosition } from "../../data/blockTileset.js";
+import imagePaths from "../../data/imagePaths.js";
+import Sprite from "../util/Sprite.js";
+import getWalls from "../../util/game/getWalls.js";
 const twtwistTileset = new Sprite({
     imageUrl: imagePaths.blockTileset,
     rows: 8,

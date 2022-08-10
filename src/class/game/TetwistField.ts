@@ -1,6 +1,6 @@
 import TetwistCell, { TetwistCellOptions } from "./TetwistCell.js";
 import TetwistFieldCanvas from "./TetwistFieldCanvas.js";
-import createEmptyField from "../../../util/game/createEmptyField.js";
+import createEmptyField from "../../util/game/createEmptyField.js";
 
 export type FieldData = TetwistCell[][];
 export interface TetwistFieldOptions {

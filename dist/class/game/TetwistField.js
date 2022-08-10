@@ -1,6 +1,6 @@
 import TetwistCell from "./TetwistCell.js";
 import TetwistFieldCanvas from "./TetwistFieldCanvas.js";
-import createEmptyField from "../../../util/game/createEmptyField.js";
+import createEmptyField from "../../util/game/createEmptyField.js";
 export default class TetwistField {
     constructor(options) {
         const { width, height, startingFieldData: startingField } = options;

@@ -1,4 +1,4 @@
-import TetwistCell from "../../class/game/core/TetwistCell.js";
+import TetwistCell from "../../class/game/TetwistCell.js";
 import array2D from "../etc/array2D.js";
 const defaultCellOptions = {
     tileId: 0,

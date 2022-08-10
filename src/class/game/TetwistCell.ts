@@ -1,4 +1,4 @@
-import type { HslAdjustOptions } from "../../util/Sprite.js";
+import type { HslAdjustOptions } from "../util/Sprite.js";
 
 export interface TetwistCellOptions {
   tileId: number;

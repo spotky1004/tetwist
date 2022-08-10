@@ -1,30 +1,7 @@
 import RepeatingBackground from "./class/util/RepeatingBackground.js";
 import imagePaths from "./data/imagePaths.js";
-import TetwistField from "./class/game/core/TetwistField.js";
-import Piece from "./class/game/core/Piece.js";
+import TetwistField from "./class/game/TetwistField.js";
 import tilesEnum from "./data/tilesEnum.js";
-import array2D from "./util/etc/array2D.js";
-
-// array2D.rotate test
-let smallArr = array2D.create(5, 5, () => Math.random());
-console.time("s");
-for (let i = 0; i < 100_000; i++) {
-  smallArr = array2D.rotate(smallArr, 1);
-}
-console.timeEnd("s");
-
-// piece parsing test
-const shapes = ["..o\nooo", ".oo\noo.", "ooooo\noo.oo\nooooo"];
-for (const shape of shapes) {
-  console.time("t");
-  for (let i = 0; i < 100_000; i++) {
-    new Piece({
-      shape,
-      centerMode: "normal"
-    });
-  }
-  console.timeEnd("t");
-}
 
 const background = new RepeatingBackground({
   element: document.getElementById("background") as HTMLDivElement,
