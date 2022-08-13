@@ -1,7 +1,7 @@
-import parsePieceShape from "../../util/game/parsePieceShape.js";
-import array2D from "../../util/etc/array2D.js";
-import { getTileIdOfPieceShapeChar } from "../../data/pieceShapeLookup.js";
-import type { HslAdjustOptions } from "../util/Sprite.js";
+import parsePieceShape from "../../../util/game/parsePieceShape.js";
+import array2D from "../../../util/etc/array2D.js";
+import { getTileIdOfPieceShapeChar } from "../../../data/pieceShapeLookup.js";
+import type { HslAdjustOptions } from "../../util/Sprite.js";
 
 type PieceSpace = (number | null)[][];
 

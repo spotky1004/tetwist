@@ -1,5 +1,5 @@
 type SchedulerTaskTimes = [startedAt: number, delay: number, interval: number, totalCallCount: number];
-type SchedulerFunction = (repeatCount: number) => boolean;
+export type SchedulerFunction = (repeatCount: number) => void;
 type SchedulerTask = [callback: SchedulerFunction, times: SchedulerTaskTimes];
 
 export default class Scheduler {
@@ -24,9 +24,9 @@ export default class Scheduler {
     }
   }
 
-  addSchedule(callback: Function, delay: number, interval: number) {
+  addSchedule(callback: SchedulerFunction, delay: number, interval: number) {
     const task: SchedulerTask = [
-      callback as SchedulerFunction,
+      callback,
       [this._time, delay, interval, 0]
     ];
     this.tasks.push(task);

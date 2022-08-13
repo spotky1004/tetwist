@@ -1,6 +1,6 @@
-import parsePieceShape from "../../util/game/parsePieceShape.js";
-import array2D from "../../util/etc/array2D.js";
-import { getTileIdOfPieceShapeChar } from "../../data/pieceShapeLookup.js";
+import parsePieceShape from "../../../util/game/parsePieceShape.js";
+import array2D from "../../../util/etc/array2D.js";
+import { getTileIdOfPieceShapeChar } from "../../../data/pieceShapeLookup.js";
 export default class Piece {
     constructor(options) {
         const parsedPiece = parsePieceShape(options.shape);

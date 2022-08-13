@@ -1,27 +1,17 @@
 import RepeatingBackground from "./class/util/RepeatingBackground.js";
 import imagePaths from "./data/imagePaths.js";
-import TetwistField from "./class/game/TetwistField.js";
 import tilesEnum from "./data/tilesEnum.js";
-const background = new RepeatingBackground({
-    element: document.getElementById("background"),
-    size: {
-        value: 25,
-        unit: "vmin"
-    },
-    imageUrl: imagePaths.bgNormal
-});
-background.startMove({
-    duration: 25,
-    xSpeed: 1,
-    ySpeed: 1
+import Game from "./class/game/Game.js";
+const game = new Game({
+    field: {
+        width: 10,
+        height: 20,
+        canvasWrapper: document.getElementById("game__tetwist-field-wrapper"),
+        canvas: document.getElementById("game__tetwist-field"),
+    }
 });
 // field test
-const field = new TetwistField({
-    width: 10,
-    height: 20,
-    canvasWrapper: document.getElementById("game__tetwist-field-wrapper"),
-    canvas: document.getElementById("game__tetwist-field"),
-});
+const field = game.field;
 for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 20; y++) {
         if (Math.random() > 0.5)
@@ -40,11 +30,25 @@ for (let x = 0; x < 10; x++) {
         });
     }
 }
+// create background
+const background = new RepeatingBackground({
+    element: document.getElementById("background"),
+    size: {
+        value: 25,
+        unit: "vmin"
+    },
+    imageUrl: imagePaths.bgNormal
+});
+background.startMove({
+    duration: 25,
+    xSpeed: 1,
+    ySpeed: 1
+});
 function tick() {
     render();
     requestAnimationFrame(tick);
 }
 function render() {
-    field.render();
+    game.render();
 }
 tick();
