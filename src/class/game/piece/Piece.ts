@@ -13,6 +13,7 @@ interface PieceOptions {
 
 export default class Piece {
   readonly pieceSpace: PieceSpace;
+  private readonly rotatedPieceSpaces: PieceSpace[];
 
   constructor(options: PieceOptions) {
     const parsedPiece = parsePieceShape(options.shape);
@@ -26,13 +27,17 @@ export default class Piece {
     } else {
       throw new Error("Unknown error");
     }
-
     this.pieceSpace = array2D.replace(centeredPiece, (pieceShapeChar) => {
       if (pieceShapeChar === null) return pieceShapeChar;
       const tileId = getTileIdOfPieceShapeChar(pieceShapeChar);
       if (typeof tileId === "undefined") throw new Error("Invaild char in piece shape");
       return tileId;
     });
-    array2D.freeze(this.pieceSpace);
+    void array2D.freeze(this.pieceSpace);
+
+    this.rotatedPieceSpaces = [];
+    for (let i = 0; i < 4; i++) {
+      this.rotatedPieceSpaces.push(array2D.rotate(this.pieceSpace, i));
+    }
   }
 }

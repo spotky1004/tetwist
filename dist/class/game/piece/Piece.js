@@ -23,6 +23,10 @@ export default class Piece {
                 throw new Error("Invaild char in piece shape");
             return tileId;
         });
-        array2D.freeze(this.pieceSpace);
+        void array2D.freeze(this.pieceSpace);
+        this.rotatedPieceSpaces = [];
+        for (let i = 0; i < 4; i++) {
+            this.rotatedPieceSpaces.push(array2D.rotate(this.pieceSpace, i));
+        }
     }
 }
