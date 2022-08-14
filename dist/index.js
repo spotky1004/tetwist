@@ -20,6 +20,7 @@ for (let x = 0; x < 10; x++) {
         const tileId = tilesEnum.normalBlock;
         const isGrey = 0;
         field.setCell(x, y, {
+            isSolid: true,
             tileId,
             timestemp: timestamp,
             hslAdjust: {
