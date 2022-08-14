@@ -137,7 +137,6 @@ function freeze(arr) {
     for (let y = 0; y < arr.length; y++) {
         Object.freeze(arr[y]);
     }
-    return arr;
 }
 export default {
     create,
