@@ -23,5 +23,6 @@ export default class Piece {
                 throw new Error("Invaild char in piece shape");
             return tileId;
         });
+        array2D.freeze(this.pieceSpace);
     }
 }

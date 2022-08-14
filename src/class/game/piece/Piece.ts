@@ -33,5 +33,6 @@ export default class Piece {
       if (typeof tileId === "undefined") throw new Error("Invaild char in piece shape");
       return tileId;
     });
+    array2D.freeze(this.pieceSpace);
   }
 }

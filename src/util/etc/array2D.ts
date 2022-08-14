@@ -142,6 +142,14 @@ function rotate<T extends any[][]>(arr: T, rotateCount: number) {
   return result;
 }
 
+function freeze<T extends any[][]>(arr: T) {
+  Object.freeze(arr);
+  for (let y = 0 ; y < arr.length; y++) {
+    Object.freeze(arr[y]);
+  }
+  return arr;
+}
+
 export default {
   create,
   fill,
@@ -149,5 +157,6 @@ export default {
   measure,
   trim,
   replace,
-  rotate
+  rotate,
+  freeze
 };
