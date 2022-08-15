@@ -2,8 +2,9 @@ function create(rows, cols, toFill) {
     const isFillCallback = typeof toFill === "function";
     const array = new Array(cols)
         .fill(undefined)
-        .map(_ => new Array(rows)
-        .fill(!isFillCallback ? toFill : toFill()));
+        .map((_, y) => new Array(rows)
+        .fill(undefined)
+        .map((_, x) => !isFillCallback ? toFill : toFill(x, y)));
     return array;
 }
 function fill(arr, width, height, xOffset, yOffset, fillWith) {

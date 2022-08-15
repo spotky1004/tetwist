@@ -1,11 +1,14 @@
-function create(rows: number, cols: number, toFill?: any) {
+type CreateToFillCallback = (x: number, y: number) => any;
+type CreateToFill = CreateToFillCallback | number | string | boolean | BigInt | Symbol | object | null;
+function create(rows: number, cols: number, toFill?: CreateToFill) {
   const isFillCallback = typeof toFill === "function";
 
   const array = new Array(cols)
     .fill(undefined)
-    .map(_ =>
+    .map((_, y) =>
       new Array(rows)
-        .fill(!isFillCallback ? toFill : toFill())
+        .fill(undefined)
+        .map((_, x) => !isFillCallback ? toFill : toFill(x, y))
     );
   
   return array;
