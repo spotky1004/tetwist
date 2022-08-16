@@ -1,4 +1,4 @@
-import { FieldData } from "../../class/game/TetwistField.js";
+import { FieldData } from "../../class/game/field/TetwistField.js";
 
 export default function getWalls(fieldData: FieldData, x: number, y: number) {
   const { tileId, timestamp } = fieldData[y][x];
