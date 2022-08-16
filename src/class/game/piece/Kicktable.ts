@@ -38,7 +38,7 @@ export default class Kicktable {
     for (let i = 0; i < Math.min(kicktests1.length, kicktests2.length); i++) {
       const [x1, y1] = kicktests1[i];
       const [x2, y2] = kicktests2[i];
-      kicktests.push([x1 - x2, y1 - y2]);
+      kicktests.push([x1 - x2, -(y1 - y2)]);
     }
     return deepcloneKicktests(kicktests);
   }
