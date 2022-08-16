@@ -14,6 +14,7 @@ export default class TetwistField {
         this.canvas = new TetwistFieldCanvas(this, options.canvasWrapper, options.canvas);
         this.piece = null;
         this.bag = options.bag;
+        this.spawnPiece();
     }
     spawnPiece(piece) {
         if (!piece)

@@ -15,29 +15,37 @@ export default class ControlManager {
   init() {
     const k = this.keyboardEventsManager;
     const g = this.game;
-    const f = g.field;
 
     k.attatchEvent("down", "KeyX", () => {
-      f.piece?.rotateCw();
+      g.field.piece?.rotateCw();
     });
     k.attatchEvent("down", "ArrowUp", () => {
-      f.piece?.rotateCw();
+      g.field.piece?.rotateCw();
     });
     k.attatchEvent("down", "KeyZ", () => {
-      f.piece?.rotateCcw();
+      g.field.piece?.rotateCcw();
     });
     k.attatchEvent("down", "KeyA", () => {
-      f.piece?.rotate180();
+      g.field.piece?.rotate180();
+    });
+
+    k.attatchEvent("down", "Space", () => {
+      let result = true;
+      while (result) {
+        result = g.field.piece?.moveDown() ?? false;
+      }
+      g.field.placePiece();
+      g.field.spawnPiece();
     });
 
     k.attatchEvent("down", "ArrowDown", () => {
-      f.piece?.moveDown();
+      g.field.piece?.moveDown();
     });
     k.attatchEvent("down", "ArrowLeft", () => {
-      f.piece?.moveLeft();
+      g.field.piece?.moveLeft();
     });
     k.attatchEvent("down", "ArrowRight", () => {
-      f.piece?.moveRight();
+      g.field.piece?.moveRight();
     });
   }
 }
