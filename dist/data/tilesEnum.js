@@ -1,4 +1,5 @@
 const tilesEnum = {
+    "empty": 0,
     "normalBlock": 100,
 };
 Object.freeze(tilesEnum);
