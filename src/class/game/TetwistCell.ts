@@ -3,20 +3,20 @@ import type { HslAdjustOptions } from "../util/Sprite.js";
 export interface TetwistCellOptions {
   isSolid: boolean;
   tileId: number;
-  timestemp: number;
+  timestamp: number;
   hslAdjust?: HslAdjustOptions;
 }
 
 export default class TetwistCell {
   isSolid: boolean;
   tileId: number;
-  timestemp: number;
+  timestamp: number;
   hslAdjust: HslAdjustOptions | undefined;
 
   constructor(options: TetwistCellOptions) {
     this.isSolid = options.isSolid;
     this.tileId = options.tileId;
-    this.timestemp = options.timestemp;
+    this.timestamp = options.timestamp;
     this.hslAdjust = options.hslAdjust;
   }
 
@@ -24,7 +24,7 @@ export default class TetwistCell {
     return new TetwistCell({
       isSolid: this.isSolid,
       tileId: this.tileId,
-      timestemp: this.timestemp,
+      timestamp: this.timestamp,
       hslAdjust: this.hslAdjust
     })
   }
