@@ -73,7 +73,6 @@ export default class FieldPiece {
         const nextRotateState = piece.getRotetedState(rotateCount);
         const solidField = this.field.getSolidField();
         const kicktests = piece.kicktable.getKicktests(convention);
-        console.log(convention, kicktests);
         let vaildKick = undefined;
         for (const kicktest of kicktests) {
             const [xOffset, yOffset] = kicktest;
