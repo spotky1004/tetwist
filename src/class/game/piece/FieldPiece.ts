@@ -177,7 +177,7 @@ export default class FieldPiece {
     this.doRotate(2);
   }
 
-  move(x: number, y: number) {
+  move(x: number, y: number): boolean {
     const pieceSpace = this.getPieceSpace();
     const solidField = this.field.getSolidField();
     
@@ -185,22 +185,23 @@ export default class FieldPiece {
     const nextY = this._y + y;
 
     const isVaildMove = !solidField.testCollision(pieceSpace, nextX, nextY);
-    if (!isVaildMove) return;
+    if (!isVaildMove) return false;
     this.removePieceFromField();
     this._x = nextX;
     this._y = nextY;
     this.setPieceToField();
+    return true;
   }
 
   moveDown() {
-    this.move(0, 1);
+    return this.move(0, 1);
   }
 
   moveLeft() {
-    this.move(-1, 0);
+    return this.move(-1, 0);
   }
 
   moveRight() {
-    this.move(1, 0);
+    return this.move(1, 0);
   }
 }

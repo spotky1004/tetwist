@@ -146,19 +146,20 @@ export default class FieldPiece {
         const nextY = this._y + y;
         const isVaildMove = !solidField.testCollision(pieceSpace, nextX, nextY);
         if (!isVaildMove)
-            return;
+            return false;
         this.removePieceFromField();
         this._x = nextX;
         this._y = nextY;
         this.setPieceToField();
+        return true;
     }
     moveDown() {
-        this.move(0, 1);
+        return this.move(0, 1);
     }
     moveLeft() {
-        this.move(-1, 0);
+        return this.move(-1, 0);
     }
     moveRight() {
-        this.move(1, 0);
+        return this.move(1, 0);
     }
 }
