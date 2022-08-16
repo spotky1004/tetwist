@@ -1,6 +1,7 @@
 import parsePieceShape from "../../../util/game/parsePieceShape.js";
 import array2D from "../../../util/etc/array2D.js";
 import { getTileIdOfPieceShapeChar } from "../../../data/pieceShapeLookup.js";
+import Kicktable from "./Kicktable.js";
 import type { HslAdjustOptions } from "../../util/Sprite.js";
 
 type PieceSpace = (number | null)[][];
@@ -8,12 +9,15 @@ type PieceSpace = (number | null)[][];
 interface PieceOptions {
   shape: string;
   centerMode: "normal";
+  kicktable: Kicktable;
   hslAdjust?: HslAdjustOptions;
 }
 
 export default class Piece {
   readonly pieceSpace: PieceSpace;
   private readonly rotatedPieceSpaces: PieceSpace[];
+  readonly hslAdjust: HslAdjustOptions | undefined;
+  readonly kicktable: Kicktable;
 
   constructor(options: PieceOptions) {
     const parsedPiece = parsePieceShape(options.shape);
@@ -37,7 +41,17 @@ export default class Piece {
 
     this.rotatedPieceSpaces = [];
     for (let i = 0; i < 4; i++) {
-      this.rotatedPieceSpaces.push(array2D.rotate(this.pieceSpace, i));
+      const rotated = array2D.rotate(this.pieceSpace, i);
+      void array2D.freeze(rotated);
+      this.rotatedPieceSpaces.push();
     }
+
+    this.hslAdjust = options.hslAdjust;
+    this.kicktable = options.kicktable;
+  }
+
+  getRotetedState(rotateCount: number) {
+    rotateCount = rotateCount % 4;
+    return this.rotatedPieceSpaces[rotateCount];
   }
 }

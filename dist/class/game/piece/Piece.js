@@ -26,7 +26,15 @@ export default class Piece {
         void array2D.freeze(this.pieceSpace);
         this.rotatedPieceSpaces = [];
         for (let i = 0; i < 4; i++) {
-            this.rotatedPieceSpaces.push(array2D.rotate(this.pieceSpace, i));
+            const rotated = array2D.rotate(this.pieceSpace, i);
+            void array2D.freeze(rotated);
+            this.rotatedPieceSpaces.push();
         }
+        this.hslAdjust = options.hslAdjust;
+        this.kicktable = options.kicktable;
+    }
+    getRotetedState(rotateCount) {
+        rotateCount = rotateCount % 4;
+        return this.rotatedPieceSpaces[rotateCount];
     }
 }
