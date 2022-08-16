@@ -5,6 +5,7 @@ import tilesEnum from "../../data/tilesEnum.js";
 export type Field = TetwistCell[][];
 
 const defaultCellOptions: TetwistCellOptions = {
+  isSolid: false,
   tileId: tilesEnum.empty,
   timestamp: -1
 }

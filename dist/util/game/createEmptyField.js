@@ -2,6 +2,7 @@ import TetwistCell from "../../class/game/TetwistCell.js";
 import array2D from "../etc/array2D.js";
 import tilesEnum from "../../data/tilesEnum.js";
 const defaultCellOptions = {
+    isSolid: false,
     tileId: tilesEnum.empty,
     timestamp: -1
 };
