@@ -5,8 +5,8 @@ export default class KeyboardEventsManager {
         this.attatchedListeners = new Map();
         this.start();
     }
-    attatchEvent(eventType, key, listener) {
-        const listenerKey = eventType + "/" + key;
+    attatchEvent(eventType, code, listener) {
+        const listenerKey = eventType + "/" + code;
         const attatchedListener = this.attatchedListeners.get(listenerKey);
         if (typeof attatchedListener === "undefined") {
             this.attatchedListeners.set(listenerKey, [listener]);
@@ -16,8 +16,8 @@ export default class KeyboardEventsManager {
         }
         return this;
     }
-    disattachEvent(eventType, key, listener) {
-        const listenerKey = eventType + "/" + key;
+    disattachEvent(eventType, code, listener) {
+        const listenerKey = eventType + "/" + code;
         const attatchedListener = this.attatchedListeners.get(listenerKey);
         if (typeof attatchedListener !== "undefined") {
             this.attatchedListeners.set(listenerKey, attatchedListener.filter(c => c !== listener));
@@ -32,7 +32,7 @@ export default class KeyboardEventsManager {
             return;
         this.isWorking = true;
         const createKeyboardEventsManagerListener = (eventType) => (keyboardEvent) => {
-            const attatchedListener = this.attatchedListeners.get(eventType + "/" + keyboardEvent.key);
+            const attatchedListener = this.attatchedListeners.get(eventType + "/" + keyboardEvent.code);
             if (typeof attatchedListener === "undefined")
                 return;
             for (const listner of attatchedListener) {
