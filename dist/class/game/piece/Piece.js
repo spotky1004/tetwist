@@ -7,8 +7,9 @@ export default class Piece {
         const [width, height] = array2D.measure(parsedPiece);
         let centeredPiece;
         if (options.centerMode === "normal") {
-            const size = Math.max(width, height);
-            const xOffset = Math.floor(Math.max(0, (size - width)) / 2);
+            const defSize = Math.max(width, height);
+            const size = defSize % 2 === 0 ? defSize + 1 : defSize;
+            const xOffset = Math.ceil(Math.max(0, (size - width)) / 2);
             const yOffset = Math.floor(Math.max(0, (size - height)) / 2);
             centeredPiece = array2D.fill(parsedPiece, size, size, xOffset, yOffset, null);
         }
@@ -28,10 +29,13 @@ export default class Piece {
         for (let i = 0; i < 4; i++) {
             const rotated = array2D.rotate(this.pieceSpace, i);
             void array2D.freeze(rotated);
-            this.rotatedPieceSpaces.push();
+            this.rotatedPieceSpaces.push(rotated);
         }
         this.hslAdjust = options.hslAdjust;
         this.kicktable = options.kicktable;
+    }
+    getSize() {
+        return this.pieceSpace.length;
     }
     getRotetedState(rotateCount) {
         rotateCount = rotateCount % 4;
