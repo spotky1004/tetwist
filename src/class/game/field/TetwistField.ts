@@ -5,6 +5,7 @@ import FieldPiece from "../piece/FieldPiece.js";
 import SolidField from "./SolidField.js";
 import array2D from "../../../util/etc/array2D.js";
 import type Piece from "../piece/Piece.js";
+import type Bag from "../piece/Bag.js";
 
 export type FieldData = TetwistCell[][];
 export interface TetwistFieldOptions {
@@ -13,6 +14,7 @@ export interface TetwistFieldOptions {
   startingFieldData?: FieldData;
   canvasWrapper: HTMLElement;
   canvas: HTMLCanvasElement;
+  bag: Bag;
 }
 
 export default class TetwistField {
@@ -22,6 +24,7 @@ export default class TetwistField {
   readonly startingField: FieldData;
   readonly canvas: TetwistFieldCanvas;
   piece: FieldPiece | null;
+  readonly bag: Bag;
 
   constructor(options: TetwistFieldOptions) {
     const { width, height, startingFieldData: startingField } = options;
@@ -32,9 +35,11 @@ export default class TetwistField {
     this.startingField = startingField ?? createEmptyField(width, height);
     this.canvas = new TetwistFieldCanvas(this, options.canvasWrapper, options.canvas);
     this.piece = null;
+    this.bag = options.bag;
   }
 
-  spawnPiece(piece: Piece) {
+  spawnPiece(piece?: Piece) {
+    if (!piece) piece = this.bag.getNext();
     if (this.piece !== null) this.piece.removePieceFromField();
     const pieceSize = piece.getSize();
     const fieldPiece = new FieldPiece({
@@ -45,6 +50,12 @@ export default class TetwistField {
     });
     fieldPiece.setPieceToField();
     this.piece = fieldPiece;
+  }
+
+  placePiece() {
+    if (this.piece === null) return;
+    this.piece.placePiece();
+    this.piece = null;
   }
 
   setCell(x: number, y: number, cellOptions: TetwistCellOptions) {
@@ -81,6 +92,8 @@ export default class TetwistField {
         row[x] = startingRow[x].clone();
       }
     }
+    this.piece = null;
+    this.bag.reset();
   }
 
   cloneField() {

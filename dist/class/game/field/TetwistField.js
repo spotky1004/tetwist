@@ -13,8 +13,11 @@ export default class TetwistField {
         this.startingField = startingField ?? createEmptyField(width, height);
         this.canvas = new TetwistFieldCanvas(this, options.canvasWrapper, options.canvas);
         this.piece = null;
+        this.bag = options.bag;
     }
     spawnPiece(piece) {
+        if (!piece)
+            piece = this.bag.getNext();
         if (this.piece !== null)
             this.piece.removePieceFromField();
         const pieceSize = piece.getSize();
@@ -26,6 +29,12 @@ export default class TetwistField {
         });
         fieldPiece.setPieceToField();
         this.piece = fieldPiece;
+    }
+    placePiece() {
+        if (this.piece === null)
+            return;
+        this.piece.placePiece();
+        this.piece = null;
     }
     setCell(x, y, cellOptions) {
         if (0 > x || x >= this.width ||
@@ -56,6 +65,8 @@ export default class TetwistField {
                 row[x] = startingRow[x].clone();
             }
         }
+        this.piece = null;
+        this.bag.reset();
     }
     cloneField() {
         const cloned = [];
