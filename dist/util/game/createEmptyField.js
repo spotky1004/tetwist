@@ -1,4 +1,4 @@
-import TetwistCell from "../../class/game/TetwistCell.js";
+import TetwistCell from "../../class/game/field/TetwistCell.js";
 import array2D from "../etc/array2D.js";
 import tilesEnum from "../../data/tilesEnum.js";
 const defaultCellOptions = {

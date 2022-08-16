@@ -1,4 +1,4 @@
-import TetwistCell, { TetwistCellOptions } from "../../class/game/TetwistCell.js";
+import TetwistCell, { TetwistCellOptions } from "../../class/game/field/TetwistCell.js";
 import array2D from "../etc/array2D.js";
 import tilesEnum from "../../data/tilesEnum.js";
 
