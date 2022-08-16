@@ -1,12 +1,11 @@
-import TetwistField from "./TetwistField.js";
+import TetwistField from "./field/TetwistField.js";
 import GameEffects from "./effect/GameEffects.js";
-import KeyboardEventsManager from "../util/KeyboardEventsManager.js";
+import ControlManager from "./ControlManager.js";
 export default class Game {
     constructor(options) {
         this.field = new TetwistField(options.field);
         this.effects = new GameEffects(this);
-        this.keyboardEventsManager = new KeyboardEventsManager();
-        this.keyboardEventsManager;
+        this.controlManager = new ControlManager(this);
     }
     tick(dt) {
         this.effects.tick(dt);
