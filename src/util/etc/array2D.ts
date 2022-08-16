@@ -133,6 +133,7 @@ function rotate<T extends any[][]>(arr: T, rotateCount: number) {
   const result: T = [] as unknown as T;
   for (let y = 0; y < height; y++) {
     const row: T[number] = [];
+    result.push(row);
     for (let x = 0; x < width; x++) {
       const shiftedX = x - (width-1)/2;
       const shiftedY = y - (height-1)/2;

@@ -123,6 +123,7 @@ function rotate(arr, rotateCount) {
     const result = [];
     for (let y = 0; y < height; y++) {
         const row = [];
+        result.push(row);
         for (let x = 0; x < width; x++) {
             const shiftedX = x - (width - 1) / 2;
             const shiftedY = y - (height - 1) / 2;
