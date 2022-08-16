@@ -161,7 +161,8 @@ export default class FieldPiece {
       nextState === null ||
       nextConvention === null
     ) return;
-    this.testAndRotate(nextRotate, nextConvention);
+    const result = this.testAndRotate(nextRotate, nextConvention);
+    if (!result) return;
     this.state = nextState;
   }
 

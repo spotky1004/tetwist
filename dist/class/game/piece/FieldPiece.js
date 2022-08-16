@@ -126,7 +126,9 @@ export default class FieldPiece {
         if (nextState === null ||
             nextConvention === null)
             return;
-        this.testAndRotate(nextRotate, nextConvention);
+        const result = this.testAndRotate(nextRotate, nextConvention);
+        if (!result)
+            return;
         this.state = nextState;
     }
     rotateCw() {
