@@ -26,6 +26,10 @@ export default class ControlManager {
     k.attatchEvent("down", "KeyZ", () => {
       f.piece?.rotateCcw();
     });
+    k.attatchEvent("down", "KeyA", () => {
+      f.piece?.rotate180();
+    });
+
     k.attatchEvent("down", "ArrowDown", () => {
       f.piece?.moveDown();
     });
