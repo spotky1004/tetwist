@@ -82,8 +82,11 @@ export default class FieldPiece {
     
     for (let y = 0; y < height; y++) {
       const fieldY = y + this._y;
+      const row = pieceSpace[y];
       for (let x = 0; x < width; x++) {
         const fieldX = x + this._x;
+        const tileId = row[x];
+        if (tileId === null) continue;
         field.setCell(fieldX, fieldY, {
           isSolid: false,
           tileId: tilesEnum.empty,
