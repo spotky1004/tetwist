@@ -1,7 +1,7 @@
 import { FieldData } from "../../class/game/TetwistField.js";
 
 export default function getWalls(fieldData: FieldData, x: number, y: number) {
-  const { tileId, timestemp } = fieldData[y][x];
+  const { tileId, timestamp } = fieldData[y][x];
   const isWall: string[][] = [];
   for (let dy = -1; dy <= 1; dy++) {
     const row = fieldData[y+dy];
@@ -15,7 +15,7 @@ export default function getWalls(fieldData: FieldData, x: number, y: number) {
       const isCellConnected =
         cellToCompare &&
         cellToCompare.tileId === tileId &&
-        cellToCompare.timestemp === timestemp;
+        cellToCompare.timestamp === timestamp;
       isWall[dy+1].push(isCellConnected ? "0" : "1");
     }
   }

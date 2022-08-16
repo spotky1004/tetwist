@@ -1,6 +1,7 @@
 import TetwistCell from "./TetwistCell.js";
 import TetwistFieldCanvas from "./TetwistFieldCanvas.js";
 import createEmptyField from "../../util/game/createEmptyField.js";
+import array2D from "../../util/etc/array2D.js";
 export default class TetwistField {
     constructor(options) {
         const { width, height, startingFieldData: startingField } = options;
@@ -22,8 +23,11 @@ export default class TetwistField {
             return;
         const cell = this.fieldData[y][x];
         cell.tileId = cellOptions.tileId ?? cell.tileId;
-        cell.timestemp = cellOptions.timestemp ?? cell.timestemp;
+        cell.timestamp = cellOptions.timestamp ?? cell.timestamp;
         cell.hslAdjust = cellOptions.hslAdjust ?? cell.hslAdjust;
+    }
+    getSolidField() {
+        return array2D.create(this.width, this.height, (x, y) => this.fieldData[y][x].isSolid);
     }
     reset() {
         const fieldData = this.fieldData;

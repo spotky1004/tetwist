@@ -1,5 +1,5 @@
 export default function getWalls(fieldData, x, y) {
-    const { tileId, timestemp } = fieldData[y][x];
+    const { tileId, timestamp } = fieldData[y][x];
     const isWall = [];
     for (let dy = -1; dy <= 1; dy++) {
         const row = fieldData[y + dy];
@@ -12,7 +12,7 @@ export default function getWalls(fieldData, x, y) {
             const cellToCompare = row[x + dx];
             const isCellConnected = cellToCompare &&
                 cellToCompare.tileId === tileId &&
-                cellToCompare.timestemp === timestemp;
+                cellToCompare.timestamp === timestamp;
             isWall[dy + 1].push(isCellConnected ? "0" : "1");
         }
     }
