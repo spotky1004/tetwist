@@ -1,7 +1,7 @@
 import array2D from "../../../util/etc/array2D.js";
 import tilesEnum from "../../../data/tilesEnum.js";
-import { isVaildConvention, State, AnyConvention, Convention } from "./Kicktable.js";
-import type TetwistField from "../TetwistField.js";
+import { State, Convention } from "./Kicktable.js";
+import type TetwistField from "../field/TetwistField.js";
 import type Piece from "./Piece.js";
 
 interface FieldPieceOptions {
@@ -51,7 +51,7 @@ export default class FieldPiece {
     return this.piece.getRotetedState(this._rotateCount);
   }
 
-  private setPieceToField(isSolid: boolean=false) {
+  setPieceToField(isSolid: boolean=false) {
     const field = this.field;
     const pieceSpace = this.getPieceSpace();
     const [width, height] = array2D.measure(pieceSpace);
@@ -75,7 +75,7 @@ export default class FieldPiece {
     }
   }
 
-  private removePieceFromField() {
+  removePieceFromField() {
     const field = this.field;
     const pieceSpace = this.getPieceSpace();
     const [width, height] = array2D.measure(pieceSpace);
@@ -104,27 +104,18 @@ export default class FieldPiece {
 
     const nextRotateState = piece.getRotetedState(rotateCount);
     const solidField = this.field.getSolidField();
-    const [width, height] = array2D.measure(nextRotateState);
     const kicktests = piece.kicktable.getKicktests(convention);
+    console.log(convention, kicktests);
 
     let vaildKick: [xOffset: number, yOffset: number] | undefined = undefined;
-    kicktestLoop: for (const kicktest of kicktests) {
+    for (const kicktest of kicktests) {
       const [xOffset, yOffset] = kicktest;
-      for (let y = 0; y < height; y++) {
-        const fieldY = y + this._y + yOffset;
-        const pieceRow = nextRotateState[y];
-        const fieldRow = solidField[fieldY];
-        if (typeof fieldRow === "undefined") continue kicktestLoop;
-        for (let x = 0; x < width; x++) {
-          const fieldX = x + this._x + xOffset;
-          if (pieceRow[x] === null) continue;
-          if (fieldRow[fieldX] === true) continue kicktestLoop;
-        }
-        
-        vaildKick = kicktest;
-        break kicktestLoop;
-      }
+      const isVaildKick = !solidField.testCollision(nextRotateState, this._x + xOffset, this._y + yOffset);
+      if (!isVaildKick) continue;
+      vaildKick = kicktest;
+      break;
     }
+
     if (typeof vaildKick === "undefined") return false;
     this.removePieceFromField();
     const [xOffset, yOffset] = vaildKick;
@@ -135,7 +126,7 @@ export default class FieldPiece {
     return true;
   }
 
-  private getNextConvention(rotateCount: number) {
+  private getNextState(rotateCount: number) {
     const nextRotate = Math.floor(rotateCount % 4);
     let nextState: State | null = null;
     switch (nextRotate) {
@@ -143,39 +134,73 @@ export default class FieldPiece {
         nextState = "0";
         break;
       case 1:
-        nextState = "R";
+        nextState = "L";
         break;
       case 2:
         nextState = "2";
         break;
       case 3:
-        nextState = "L";
+        nextState = "R";
         break;
     }
+    return nextState;
+  }
+
+  private getNextConvention(rotateCount: number) {
+    let nextState: State | null = this.getNextState(rotateCount);
     if (nextState === null) return null;
-    const nextConvention: AnyConvention = `${this.state}${nextState}`;
+    const nextConvention: Convention = `${this.state}${nextState}`;
     return nextConvention;
   }
 
   doRotate(count: number) {
-    const nextRotate = this._rotateCount + count;
+    const nextRotate = Math.floor(this._rotateCount + count + 4) % 4;
+    const nextState = this.getNextState(nextRotate);
     const nextConvention = this.getNextConvention(nextRotate);
     if (
-      nextConvention === null ||
-      !isVaildConvention(nextConvention)
+      nextState === null ||
+      nextConvention === null
     ) return;
     this.testAndRotate(nextRotate, nextConvention);
+    this.state = nextState;
   }
 
   rotateCw() {
-    this.doRotate(1);
+    this.doRotate(-1);
   }
 
   rotateCcw() {
-    this.doRotate(-1);
+    this.doRotate(1);
   }
 
   rotate180() {
     this.doRotate(2);
+  }
+
+  move(x: number, y: number) {
+    const pieceSpace = this.getPieceSpace();
+    const solidField = this.field.getSolidField();
+    
+    const nextX = this._x + x;
+    const nextY = this._y + y;
+
+    const isVaildMove = !solidField.testCollision(pieceSpace, nextX, nextY);
+    if (!isVaildMove) return;
+    this.removePieceFromField();
+    this._x = nextX;
+    this._y = nextY;
+    this.setPieceToField();
+  }
+
+  moveDown() {
+    this.move(0, 1);
+  }
+
+  moveLeft() {
+    this.move(-1, 0);
+  }
+
+  moveRight() {
+    this.move(1, 0);
   }
 }

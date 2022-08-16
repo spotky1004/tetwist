@@ -1,6 +1,5 @@
 import array2D from "../../../util/etc/array2D.js";
 import tilesEnum from "../../../data/tilesEnum.js";
-import { isVaildConvention } from "./Kicktable.js";
 export default class FieldPiece {
     constructor(options) {
         this.field = options.field;
@@ -73,27 +72,16 @@ export default class FieldPiece {
         const piece = this.piece;
         const nextRotateState = piece.getRotetedState(rotateCount);
         const solidField = this.field.getSolidField();
-        const [width, height] = array2D.measure(nextRotateState);
         const kicktests = piece.kicktable.getKicktests(convention);
+        console.log(convention, kicktests);
         let vaildKick = undefined;
-        kicktestLoop: for (const kicktest of kicktests) {
+        for (const kicktest of kicktests) {
             const [xOffset, yOffset] = kicktest;
-            for (let y = 0; y < height; y++) {
-                const fieldY = y + this._y + yOffset;
-                const pieceRow = nextRotateState[y];
-                const fieldRow = solidField[fieldY];
-                if (typeof fieldRow === "undefined")
-                    continue kicktestLoop;
-                for (let x = 0; x < width; x++) {
-                    const fieldX = x + this._x + xOffset;
-                    if (pieceRow[x] === null)
-                        continue;
-                    if (fieldRow[fieldX] === true)
-                        continue kicktestLoop;
-                }
-                vaildKick = kicktest;
-                break kicktestLoop;
-            }
+            const isVaildKick = !solidField.testCollision(nextRotateState, this._x + xOffset, this._y + yOffset);
+            if (!isVaildKick)
+                continue;
+            vaildKick = kicktest;
+            break;
         }
         if (typeof vaildKick === "undefined")
             return false;
@@ -105,7 +93,7 @@ export default class FieldPiece {
         this.setPieceToField();
         return true;
     }
-    getNextConvention(rotateCount) {
+    getNextState(rotateCount) {
         const nextRotate = Math.floor(rotateCount % 4);
         let nextState = null;
         switch (nextRotate) {
@@ -113,35 +101,63 @@ export default class FieldPiece {
                 nextState = "0";
                 break;
             case 1:
-                nextState = "R";
+                nextState = "L";
                 break;
             case 2:
                 nextState = "2";
                 break;
             case 3:
-                nextState = "L";
+                nextState = "R";
                 break;
         }
+        return nextState;
+    }
+    getNextConvention(rotateCount) {
+        let nextState = this.getNextState(rotateCount);
         if (nextState === null)
             return null;
         const nextConvention = `${this.state}${nextState}`;
         return nextConvention;
     }
     doRotate(count) {
-        const nextRotate = this._rotateCount + count;
+        const nextRotate = Math.floor(this._rotateCount + count + 4) % 4;
+        const nextState = this.getNextState(nextRotate);
         const nextConvention = this.getNextConvention(nextRotate);
-        if (nextConvention === null ||
-            !isVaildConvention(nextConvention))
+        if (nextState === null ||
+            nextConvention === null)
             return;
         this.testAndRotate(nextRotate, nextConvention);
+        this.state = nextState;
     }
     rotateCw() {
-        this.doRotate(1);
+        this.doRotate(-1);
     }
     rotateCcw() {
-        this.doRotate(-1);
+        this.doRotate(1);
     }
     rotate180() {
         this.doRotate(2);
+    }
+    move(x, y) {
+        const pieceSpace = this.getPieceSpace();
+        const solidField = this.field.getSolidField();
+        const nextX = this._x + x;
+        const nextY = this._y + y;
+        const isVaildMove = !solidField.testCollision(pieceSpace, nextX, nextY);
+        if (!isVaildMove)
+            return;
+        this.removePieceFromField();
+        this._x = nextX;
+        this._y = nextY;
+        this.setPieceToField();
+    }
+    moveDown() {
+        this.move(0, 1);
+    }
+    moveLeft() {
+        this.move(-1, 0);
+    }
+    moveRight() {
+        this.move(1, 0);
     }
 }
