@@ -1,6 +1,7 @@
 import RepeatingBackground from "./class/util/RepeatingBackground.js";
 import imagePaths from "./data/imagePaths.js";
 import Game from "./class/game/Game.js";
+import tetrominos from "./data/pieces/tetrominos.js";
 
 const game = new Game({
   field: {
@@ -10,6 +11,8 @@ const game = new Game({
     canvas: document.getElementById("game__tetwist-field") as HTMLCanvasElement,
   }
 });
+game.field.spawnPiece(tetrominos.jPiece);
+console.log(game.field);
 
 // create background
 const background = new RepeatingBackground({
